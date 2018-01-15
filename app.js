@@ -14,8 +14,6 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var property = require('./routes/property');
 var roles = require('./routes/roles');
-var userRoles = require('./routes/userRole');
-var accounts = require('./routes/accounts');
 var contacts = require('./routes/contact');
 var CryptoJS = require("crypto-js");
 
@@ -46,9 +44,7 @@ app.use('/users', users);
 app.use('/signup', users);
 app.use('/property', property);
 app.use('/roles', roles);
-app.use('/userRoles', userRoles);
 app.use('/contacts', contacts);
-app.use('/accounts', accounts);
 
 
 var User = require('./models/user');
