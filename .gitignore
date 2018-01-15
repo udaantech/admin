@@ -1,0 +1,10 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+docs/
+reports/
+
+# VsCode
+.vscode/
+
+# Node.js
+node_modules
+npm-debug.log
