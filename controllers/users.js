@@ -2,6 +2,9 @@ var User = require('../models/user');
 var passport = require('passport');
 var CryptoJS = require("crypto-js");
 var mail = require("../services/mail");
+var jwt = require('jsonwebtoken');
+var config = require("../config/config");
+
 
 
 //login api
@@ -94,11 +97,30 @@ exports.successjson = function(req, res, next) {
 			{ email: email },
 			{ password: 0, __v: 0 }, 
 		function(err, user) {
-			if (err)
+			if (err) {
 				res.send(err);
+			} else if(user.isActive == false) {
+				res.statusCode = 401;
+				res.json({"status": "success", "statusCode": 401, "message": "Account is deactivated", "result": []});
+			} else {
+				const payload = {
+			      admin: user.email 
+			    };
+			    var token = jwt.sign({ name: user.firstname, email: user.email }, config.SECRET, { expiresIn: 999999 });
 
-			res.statusCode = 200;
-			res.json({"status": "success", "statusCode": 200, "message": "Login Successfully", "result": user});
+				res.statusCode = 200;
+				res.json({"status": "success", "statusCode": 200, "message": "Login Successfully", "result": user,"token": token});
+			}
+				
+
+			
+
+		   // console.log("========>",config.SECRET);
+
+	        /*var token = jwt.sign(payload, config.SECRET, {
+	         expiresInMinutes: 1440 // expires in 24 hours
+	        });*/
+			
 	    });
 }
 
@@ -190,7 +212,7 @@ exports.index = function(req, res, next) {
 	var where = {};
     where["isActive"] = true;
 
-	 User.find(where,{ email: 1, firstname: 1, _id: 1, lastname: 1 })
+	 User.find(where,{ email: 1, firstname: 1, _id: 1, lastname: 1, isActive: 1, createdAt: 1 })
         .populate("userRoles")
         .exec(function(err, user) {
             if (err) {
@@ -246,8 +268,8 @@ exports.view = function(req, res, next) {
     where["isActive"] = true;
     where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
  
-    User.findOne(where,{ email: 1, firstname: 1, _id: 1, lastname: 1 })
-        //.populate("user")
+    User.findById(req.params.id)
+        .populate("userRoles")
         .exec(function(err, user) {
         	//console.log("====>",role);
             if (err) {
@@ -287,7 +309,8 @@ exports.update = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			} else {
-				  User.findById(req.params.id, function(err, user) {
+
+				 /* User.findById(req.params.id, function(err, user) {
 			        if (err) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
@@ -298,7 +321,22 @@ exports.update = function(req, res, next) {
 
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "User has been updated successfully", "result": user});
-			    });
+			    });*/
+
+	    		User.findById(req.params.id)
+		        .populate("userRoles")
+		        .exec(function(err, user) {
+		        	//console.log("====>",role);
+		            if (err) {
+						res.statusCode = 401;
+						return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
+					} else if(user == null || user.length == 0) {
+						res.statusCode = 401;
+						return res.json({"status": "failure", "statusCode": 401, "message": 'user not found', "result": []});
+					} 
+					
+					return res.json({"status": "success", "statusCode": 200, "message": "User has been updated successfully", "result": user});
+		        });
 
 			}
 

@@ -60,7 +60,7 @@ exports.index = function(req, res, next) {
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			} else if(contact == null || contact.length == 0) {
 				res.statusCode = 401;
-				return res.json({"status": "failure", "statusCode": 401, "message": 'Role not found', "result": []});
+				return res.json({"status": "failure", "statusCode": 401, "message": 'Contact not found', "result": []});
 			} 
 			
 			return res.json({"status": "success", "statusCode": 200, "message": "Contact list", "result": contact});

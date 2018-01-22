@@ -17,7 +17,8 @@ exports.create = function(req, res, next) {
 			name: req.body.name,
 			description: req.body.description,
 			address: req.body.address,
-			gps: req.body.gps,
+			gps_lat: req.body.gps_lat,
+			gps_long: req.body.gps_long,
 			socialWebsite: req.body.socialWebsite,
 			socialFacebook: req.body.socialFacebook,
 			socialInstagram: req.body.socialInstagram,
@@ -25,10 +26,11 @@ exports.create = function(req, res, next) {
 			socialTripadvisor: req.body.socialTripadvisor,
 			orgId: req.body.orgId,
 			rating: req.body.rating,
-			user: req.body.user,
+			salespersonId: req.body.salespersonId,
+			numberRooms: req.body.numberRooms,
 			isActive: 1,
 			createdAt: now,
-			createdBy: req.body.user
+			createdBy: req.body.createdBy
 		});
 
 		propertycreate.save(function(err,property){
@@ -66,7 +68,9 @@ exports.index = function(req, res, next) {
 	});*/
 
 	 Property.find(where)
-        .populate("user")
+        .populate("salespersonId","_id email firstname lastname")
+        .populate("createdBy","_id email firstname lastname")
+        .populate("lastmodifiedBy","_id email firstname lastname")
         .exec(function(err, property) {
             if (err) {
 				res.statusCode = 401;
@@ -101,7 +105,9 @@ exports.view = function(req, res, next) {
 
 	 
     Property.findOne(where)
-        .populate("user")
+        .populate("salespersonId","_id email firstname lastname")
+        .populate("createdBy","_id email firstname lastname")
+        .populate("lastmodifiedBy","_id email firstname lastname")
         .exec(function(err, property) {
             if (err) {
 				res.statusCode = 401;
@@ -110,7 +116,7 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'property not found', "result": []});
 			} 
-			console.log(property);
+			//console.log(property);
 			return res.json({"status": "success", "statusCode": 200, "message": "Property fetch", "result": property});
         });
 }
@@ -142,16 +148,18 @@ exports.update = function(req, res, next) {
     	response = { "error" : "failure", "message" : errors[0].msg };
         return res.json(response); 
     } else {
+    	var now = new Date();
 	    var where = {};
 	    where["isActive"] = true;
 	    where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
-
+	    req.body.updatedAt = now;
+	    //console.log("====>",req.body.updatedAt);
 	    Property.update(where, { $set: req.body }, {upsert: true}, function(err, property) {
 	        if (err) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			} else {
-				  Property.findById(req.params.id, function(err, property) {
+				 /* Property.findById(req.params.id, function(err, property) {
 			        if (err) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
@@ -162,12 +170,30 @@ exports.update = function(req, res, next) {
 
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Property has been updated successfully", "result": property});
-			    });
+			    });*/
+
+	    		 var where = {};
+			     where["isActive"] = true;
+			     where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
+	    		 Property.findOne(where)
+		        .populate("salespersonId","_id email firstname lastname")
+		        .populate("createdBy","_id email firstname lastname")
+		        .populate("lastmodifiedBy","_id email firstname lastname")
+		        .exec(function(err, property) {
+		            if (err) {
+						res.statusCode = 401;
+						return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
+					} else if(property == null || property.length == 0) {
+						res.statusCode = 401;
+						return res.json({"status": "failure", "statusCode": 401, "message": 'property not found', "result": []});
+					} 
+					
+					return res.json({"status": "success", "statusCode": 200, "message": "Property has been updated successfully", "result": property});
+		        });
 
 			}
 	       
-	        /*res.statusCode = 200;
-			return res.json({"status": "success", "statusCode": 200, "message": "Property has been updated successfully", "result": property});*/
+	       
 			
 	    });
     }

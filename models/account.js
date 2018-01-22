@@ -3,36 +3,22 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // create a schema
-var departmentSchema = new Schema({
+var accountSchema = new Schema({
     name: {
         type: String,
         required: true
     },
-    type: {
+    description: {
         type: String
     },
-    propertyId: {
+    planid: {
         type: Schema.Types.ObjectId,
-        ref: 'Property'
     },
-    extension: {
-        type: String
-    },
-    email: {
-        type: String
-    },
-    managerId: {
+    salesperson: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    supervisorId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    managerinDutyId: {
-        type: Schema.Types.ObjectId
-    },
-    operatinghours: {
+    billingaddress: {
         type: String
     },
     isActive: {
@@ -43,17 +29,15 @@ var departmentSchema = new Schema({
 	updatedAt: Date,
     createdBy: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
     },
     lastmodifiedBy: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
     } 
 
 });
 
 
-var Department = mongoose.model('Department', departmentSchema);
+var Account = mongoose.model('Account', accountSchema);
 
 // make this available to our accounts in our Node applications
-module.exports = Department;
+module.exports = Account;

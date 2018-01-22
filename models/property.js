@@ -17,7 +17,13 @@ var propertySchema = new Schema({
    	address: { 
       type: String
     },
-  	gps: { 
+  	gps_lat: { 
+      type: String
+    },
+    gps_lat: { 
+      type: String
+    },
+    gps_long: { 
       type: String
     },
     socialWebsite: {
@@ -35,10 +41,13 @@ var propertySchema = new Schema({
     socialTripadvisor: {
         type: String
     },
+    numberRooms: {
+        type: String
+    },
     orgId: {
         type: String
     },
-    user: {
+    salespersonId: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
@@ -46,13 +55,15 @@ var propertySchema = new Schema({
         type: Boolean,
         default: true
     },
-	  createdAt: Date,
-	  updatedAt: Date,
+	createdAt: Date,
+	updatedAt: Date,
     createdBy: {
         type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     lastmodifiedBy: {
         type: Schema.Types.ObjectId,
+        ref: 'User'
     } 
 
 });

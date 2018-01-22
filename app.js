@@ -8,13 +8,69 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var Strategy = require('passport-facebook').Strategy;
 var validator = require('express-validator');
+var jwt = require('jsonwebtoken');
+var config = require("./config/config");
+
+
+// ---------------------------------------------------------
+// get an instance of the router for api routes
+// ---------------------------------------------------------
+var apiRoutes = express.Router(); 
+
+// ---------------------------------------------------------
+// route middleware to authenticate and check token
+// ---------------------------------------------------------
+apiRoutes.use(function(req, res, next) {
+
+  // check header or url parameters or post parameters for token
+  var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+
+  // decode token
+  if (token) {
+
+    // verifies secret and checks exp
+    jwt.verify(token, config.SECRET, function(err, decoded) {      
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.' });    
+      } else {
+        // if everything is good, save to request for use in other routes
+        req.decoded = decoded;  
+        next();
+      }
+    });
+
+  } else {
+
+    // if there is no token
+    // return an error
+    return res.status(403).send({ 
+      success: false, 
+      message: 'No token provided.'
+    });
+    
+  }
+  
+});
+
 
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var property = require('./routes/property');
 var roles = require('./routes/roles');
+var userRoles = require('./routes/userRole');
+var accounts = require('./routes/accounts');
 var contacts = require('./routes/contact');
+var departments = require('./routes/departments');
+var roomCategory = require('./routes/roomCategory');
+var outlets = require('./routes/outlets');
+var outletTypes = require('./routes/outletTypes');
+var facility = require('./routes/facility');
+var facilityTypes = require('./routes/facilityTypes');
+var openingHours = require('./routes/openingHours');
+var policy = require('./routes/policy');
+var pictures = require('./routes/pictures');
+var activityTypes = require('./routes/activityTypes');
 var CryptoJS = require("crypto-js");
 
 var app = express();
@@ -42,9 +98,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/signup', users);
-app.use('/property', property);
-app.use('/roles', roles);
-app.use('/contacts', contacts);
+app.use('/property',apiRoutes, property);
+app.use('/roles', apiRoutes, roles);
+app.use('/userRoles',apiRoutes, userRoles);
+app.use('/contacts',apiRoutes, contacts);
+app.use('/accounts',apiRoutes, accounts);
+app.use('/departments',apiRoutes, departments);
+app.use('/roomCategory',apiRoutes, roomCategory);
+app.use('/outlets',apiRoutes, outlets);
+app.use('/outletTypes',apiRoutes, outletTypes);
+app.use('/facility',apiRoutes, facility);
+app.use('/facilityTypes',apiRoutes, facilityTypes);
+app.use('/openingHours',apiRoutes, openingHours);
+app.use('/policy',apiRoutes, policy);
+app.use('/pictures',apiRoutes, pictures);
+app.use('/activityTypes',apiRoutes, activityTypes);
 
 
 var User = require('./models/user');
