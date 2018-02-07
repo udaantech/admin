@@ -2,12 +2,10 @@ var OpeningHour = require('../models/openingHour');
 
 //create api of opening hours
 exports.create = function(req, res, next) {
-	
 	var response = {};
     req.checkBody("dayofweek", "Day of week is a required field.").notEmpty();
     req.checkBody("outletId", "Outlet Id is a required field.").notEmpty();
     req.checkBody("facilityId", "facility Id is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -31,7 +29,6 @@ exports.create = function(req, res, next) {
 		openingHourcreate.save(function(err,openingHour){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
@@ -60,8 +57,7 @@ exports.index = function(req, res, next) {
 			} else if(openingHour == null || openingHour.length == 0) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Opening Hour not found', "result": []});
-			} 
-			
+			} 	
 			return res.json({"status": "success", "statusCode": 200, "message": "Opening Hour list", "result": openingHour});
         });
 
@@ -85,8 +81,7 @@ exports.view = function(req, res, next) {
 			} else if(openingHour == null || openingHour.length == 0) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Opening Hour not found', "result": []});
-			} 
-			
+			} 		
 			return res.json({"status": "success", "statusCode": 200, "message": "Opening Hour fetch", "result": openingHour});
         });
 }
@@ -100,7 +95,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Opening Hour has been deleted successfully!", "result": []});
 	});
@@ -108,12 +102,10 @@ exports.delete = function(req, res, next) {
 
 //update api of opening hours
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("dayofweek", "Day of week is a required field.").notEmpty();
     req.checkBody("outletId", "Outlet Id is a required field.").notEmpty();
     req.checkBody("facilityId", "facility Id is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -139,7 +131,6 @@ exports.update = function(req, res, next) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'Opening Hour not found', "result": []});
 					} 
-
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Opening Hour has been updated successfully", "result": openingHour});
 			    });

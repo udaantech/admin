@@ -2,14 +2,12 @@ var Contact = require('../models/contact');
 
 //create api of role
 exports.create = function(req, res, next) {
-	
 	var response = {}; 
 	req.checkBody("contact_type", "Contact type is a required field").notEmpty();
     req.checkBody("email", "Email is a required field").notEmpty();
     req.checkBody("email", "Email is not valid").isEmail();
     req.checkBody("first_name", "First name is a required field.").notEmpty();
     req.checkBody("last_name", "Last name is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -35,7 +33,6 @@ exports.create = function(req, res, next) {
 		contactcreate.save(function(err,contact){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Contact already created', "result": []});
 			}  else {
 				res.statusCode = 200;
@@ -62,7 +59,6 @@ exports.index = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Contact not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "Contact list", "result": contact});
         });
 
@@ -77,7 +73,6 @@ exports.view = function(req, res, next) {
     Contact.findOne(where)
         //.populate("user")
         .exec(function(err, contact) {
-        	//console.log("====>",role);
             if (err) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
@@ -85,7 +80,6 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'contact not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "Contact fetch", "result": contact});
         });
 }
@@ -104,22 +98,18 @@ exports.delete = function(req, res, next) {
 		} else {
 			res.statusCode = 200;
 			return res.json({"status": "success", "statusCode": 200, "message": "Contact has been deleted successfully", "result": []});
-
 		}
-
     });
 }
 
 //update api of role
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("contact_type", "Contact type is a required field").notEmpty();
     req.checkBody("email", "Email is a required field").notEmpty();
     req.checkBody("email", "Email is not valid").isEmail();
     req.checkBody("first_name", "First name is a required field.").notEmpty();
     req.checkBody("last_name", "Last name is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -143,13 +133,10 @@ exports.update = function(req, res, next) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'contact not found', "result": []});
 					} 
-
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Contact has been updated successfully", "result": contact});
 			    });
-
 			}
-
 	    });
     }
 	

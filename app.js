@@ -12,6 +12,8 @@ var jwt = require('jsonwebtoken');
 var config = require("./config/config");
 
 
+
+
 // ---------------------------------------------------------
 // get an instance of the router for api routes
 // ---------------------------------------------------------
@@ -71,10 +73,28 @@ var openingHours = require('./routes/openingHours');
 var policy = require('./routes/policy');
 var pictures = require('./routes/pictures');
 var activityTypes = require('./routes/activityTypes');
+var languages = require('./routes/languages');
+var activities = require('./routes/activities');
+var roomPolicies = require('./routes/roomPolicies');
+var propertySpokenLanguages = require('./routes/propertySpokenLanguages');
+var hotelRoomCategories = require('./routes/hotelRoomCategories');
+var entities = require('./routes/entities');
+var tags = require('./routes/tags');
+var categories = require('./routes/categories');
+var guest = require('./routes/guest');
+var guestGroup = require('./routes/guestGroup');
+
 var CryptoJS = require("crypto-js");
 
 var app = express();
 app.use(validator());
+
+//app.use(bodyParser.json({limit: "50mb"}));
+//app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+var jsonParser       = bodyParser.json({limit:1024*1024*20, type:'application/json'});
+var urlencodedParser = bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoding' });
+app.use(jsonParser);
+app.use(urlencodedParser);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -113,6 +133,16 @@ app.use('/openingHours',apiRoutes, openingHours);
 app.use('/policy',apiRoutes, policy);
 app.use('/pictures',apiRoutes, pictures);
 app.use('/activityTypes',apiRoutes, activityTypes);
+app.use('/languages',apiRoutes, languages);
+app.use('/activities', apiRoutes, activities);
+app.use('/roomPolicies', apiRoutes, roomPolicies);
+app.use('/propertySpokenLanguages', apiRoutes, propertySpokenLanguages);
+app.use('/hotelRoomCategories', apiRoutes, hotelRoomCategories);
+app.use('/entities', apiRoutes, entities);
+app.use('/tags', apiRoutes, tags);
+app.use('/categories', apiRoutes, categories);
+app.use('/guest', apiRoutes, guest);
+app.use('/guestGroup', apiRoutes, guestGroup);
 
 
 var User = require('./models/user');

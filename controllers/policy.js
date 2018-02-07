@@ -2,11 +2,9 @@ var Policy = require('../models/policy');
 
 //create api of policy
 exports.create = function(req, res, next) {
-	
 	var response = {};
     req.checkBody("name", "Name is a required field.").notEmpty();
     req.checkBody("description", "Description is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -25,7 +23,6 @@ exports.create = function(req, res, next) {
 		policycreate.save(function(err,policy){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
@@ -53,7 +50,6 @@ exports.index = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Policy not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "Policy list", "result": policy});
         });
 
@@ -76,7 +72,6 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Policy not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "Policy fetch", "result": policy});
         });
 }
@@ -90,7 +85,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Policy has been deleted successfully!", "result": []});
 	});
@@ -98,11 +92,9 @@ exports.delete = function(req, res, next) {
 
 //update api of policy
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("name", "Name is a required field.").notEmpty();
     req.checkBody("description", "Description is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -128,7 +120,6 @@ exports.update = function(req, res, next) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'Policy not found', "result": []});
 					} 
-
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Policy has been updated successfully", "result": policy});
 			    });

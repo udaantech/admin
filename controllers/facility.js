@@ -2,12 +2,10 @@ var Facility = require('../models/facility');
 
 //create api of Facility
 exports.create = function(req, res, next) {
-	
 	var response = {};
     req.checkBody("name", "Name is a required field.").notEmpty();
     req.checkBody("description", "Description is a required field.").notEmpty();
     req.checkBody("type", "Facility Type is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -30,7 +28,6 @@ exports.create = function(req, res, next) {
 		facilitycreate.save(function(err,facility){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
@@ -59,7 +56,6 @@ exports.index = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'facility not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "facility list", "result": facility});
         });
 
@@ -83,7 +79,6 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'facility not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "facility fetch", "result": facility});
         });
 }
@@ -97,7 +92,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Facility has been deleted successfully!", "result": []});
 	});
@@ -105,12 +99,10 @@ exports.delete = function(req, res, next) {
 
 //update api of outlet
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("name", "Name is a required field.").notEmpty();
     req.checkBody("description", "Description is a required field.").notEmpty();
     req.checkBody("type", "Facility Type is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -136,13 +128,10 @@ exports.update = function(req, res, next) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'facility not found', "result": []});
 					} 
-
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Facility has been updated successfully", "result": facility});
 			    });
-
 			}
-
 	    });
     }
 	

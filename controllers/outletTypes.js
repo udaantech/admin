@@ -2,11 +2,9 @@ var OutletType = require('../models/outletType');
 
 //create api of outletType
 exports.create = function(req, res, next) {
-	
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
     req.checkBody("description", "Description is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -24,13 +22,11 @@ exports.create = function(req, res, next) {
 		outletTypecreate.save(function(err,outletType){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
 				return res.json({"status": "success", "statusCode": 200, "message": "Outlet Type created successfully", "result": outletType});
 			}
-
 		});
     }
 
@@ -50,8 +46,7 @@ exports.index = function(req, res, next) {
 			} else if(outletType == null || outletType.length == 0) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Outlet Type not found', "result": []});
-			} 
-			
+			} 			
 			return res.json({"status": "success", "statusCode": 200, "message": "Outlet Type list", "result": outletType});
         });
 
@@ -66,7 +61,6 @@ exports.view = function(req, res, next) {
     OutletType.findOne(where)
         //.populate("user")
         .exec(function(err, outletType) {
-        	//console.log("====>",role);
             if (err) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
@@ -74,7 +68,6 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Outlet Type not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "Outlet Type fetch", "result": outletType});
         });
 }
@@ -88,7 +81,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Outlet Type has been deleted successfully!", "result": []});
 	});
@@ -96,11 +88,9 @@ exports.delete = function(req, res, next) {
 
 //update api of role
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
     req.checkBody("description", "Description is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -124,13 +114,10 @@ exports.update = function(req, res, next) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'Outlet Type not found', "result": []});
 					} 
-
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Outlet Type has been updated successfully", "result": outletType});
 			    });
-
 			}
-
 	    });
     }
 	

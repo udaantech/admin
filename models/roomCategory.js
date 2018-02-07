@@ -43,9 +43,6 @@ var roomCategorySchema = new Schema({
     } 
 });
 
-// the schema is useless so far
-// we need to create a model using it
 var RoomCategory = mongoose.model('RoomCategory', roomCategorySchema);
 
-// make this available to our users in our Node applications
 module.exports = RoomCategory;

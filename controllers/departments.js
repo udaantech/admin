@@ -2,14 +2,12 @@ var Department = require('../models/department');
 
 //create api of property
 exports.create = function(req, res, next) {
-	
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
     req.checkBody("type", "Department Type is a required field").notEmpty();
     req.checkBody("email", "Email is a required field").notEmpty();
     req.checkBody("email", "Email is not valid").isEmail();
     //req.checkBody("propertyId", "propertyId is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -36,13 +34,11 @@ exports.create = function(req, res, next) {
 		departmentcreate.save(function(err,department){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
 				return res.json({"status": "success", "statusCode": 200, "message": "Department created successfully", "result": department});
 			}
-
 		});
     }
 
@@ -66,7 +62,6 @@ exports.index = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'department not found', "result": []});
 			} 
-			//console.log(property);
 			return res.json({"status": "success", "statusCode": 200, "message": "Department list", "result": department});
     });
 
@@ -92,7 +87,6 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Department not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "Department fetch", "result": department});
         });
 }
@@ -106,7 +100,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Department has been deleted successfully!", "result": []});
 	});
@@ -114,14 +107,12 @@ exports.delete = function(req, res, next) {
 
 //update api of Department
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
     req.checkBody("type", "Department Type is a required field").notEmpty();
     req.checkBody("email", "Email is a required field").notEmpty();
     req.checkBody("email", "Email is not valid").isEmail();
     //req.checkBody("propertyId", "propertyId is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -147,14 +138,10 @@ exports.update = function(req, res, next) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'department not found', "result": []});
 					} 
-
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Department has been updated successfully", "result": department});
 			    });
-
 			}
-
-			
 	    });
     }
 	

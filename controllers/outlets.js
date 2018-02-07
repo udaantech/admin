@@ -2,14 +2,12 @@ var Outlet = require('../models/outlet');
 
 //create api of outlet
 exports.create = function(req, res, next) {
-	
 	var response = {};
     req.checkBody("name", "Name is a required field.").notEmpty();
     req.checkBody("description", "Description is a required field.").notEmpty();
     req.checkBody("outletTypeId", "Outlet Type is a required field.").notEmpty();
     req.checkBody("email", "Email is a required field").notEmpty();
     req.checkBody("email", "Email is not valid").isEmail();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -37,7 +35,6 @@ exports.create = function(req, res, next) {
 		outletcreate.save(function(err,outlet){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
@@ -63,8 +60,7 @@ exports.index = function(req, res, next) {
 			} else if(outlet == null || outlet.length == 0) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'outlet not found', "result": []});
-			} 
-			
+			} 		
 			return res.json({"status": "success", "statusCode": 200, "message": "outlet list", "result": outlet});
         });
 
@@ -86,7 +82,6 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Outlet not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "outlet fetch", "result": outlet});
         });
 }
@@ -100,7 +95,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Outlet has been deleted successfully!", "result": []});
 	});
@@ -108,14 +102,12 @@ exports.delete = function(req, res, next) {
 
 //update api of outlet
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("name", "Name is a required field.").notEmpty();
     req.checkBody("description", "Description is a required field.").notEmpty();
     req.checkBody("outletTypeId", "Outlet Type is a required field.").notEmpty();
     req.checkBody("email", "Email is a required field").notEmpty();
     req.checkBody("email", "Email is not valid").isEmail();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -139,13 +131,10 @@ exports.update = function(req, res, next) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'Outlet not found', "result": []});
 					} 
-
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Outlet has been updated successfully", "result": outlet});
 			    });
-
 			}
-
 	    });
     }
 	

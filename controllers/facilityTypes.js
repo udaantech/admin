@@ -2,11 +2,9 @@ var FacilityType = require('../models/facilityType');
 
 //create api of FacilityType
 exports.create = function(req, res, next) {
-	
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
     req.checkBody("description", "Description is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -25,7 +23,6 @@ exports.create = function(req, res, next) {
 		facilityTypecreate.save(function(err,facilityType){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
@@ -53,7 +50,6 @@ exports.index = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Facility Type not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "Facility Type list", "result": facilityType});
         });
 
@@ -66,10 +62,9 @@ exports.view = function(req, res, next) {
     where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
  
     FacilityType.findOne(where)
-         .populate("createdBy","_id email firstname lastname")
+        .populate("createdBy","_id email firstname lastname")
         .populate("lastmodifiedby","_id email firstname lastname")
         .exec(function(err, facilityType) {
-        	//console.log("====>",role);
             if (err) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
@@ -77,7 +72,6 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'Facility Type not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "Facility Type fetch", "result": facilityType});
         });
 }
@@ -91,7 +85,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Facility Type has been deleted successfully!", "result": []});
 	});
@@ -99,11 +92,9 @@ exports.delete = function(req, res, next) {
 
 //update api of facility Type
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
     req.checkBody("description", "Description is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -129,13 +120,10 @@ exports.update = function(req, res, next) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'Facility Type not found', "result": []});
 					} 
-
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Facility Type has been updated successfully", "result": facilityType});
 			    });
-
 			}
-
 	    });
     }
 	

@@ -2,10 +2,8 @@ var Property = require('../models/property');
 
 //create api of property
 exports.create = function(req, res, next) {
-	
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -36,7 +34,6 @@ exports.create = function(req, res, next) {
 		propertycreate.save(function(err,property){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
@@ -79,7 +76,6 @@ exports.index = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'property not found', "result": []});
 			} 
-			//console.log(property);
 			return res.json({"status": "success", "statusCode": 200, "message": "Property list", "result": property});
         });
 
@@ -116,7 +112,6 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'property not found', "result": []});
 			} 
-			//console.log(property);
 			return res.json({"status": "success", "statusCode": 200, "message": "Property fetch", "result": property});
         });
 }
@@ -130,7 +125,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Property has been deleted successfully!", "result": []});
 	});
@@ -138,10 +132,8 @@ exports.delete = function(req, res, next) {
 
 //update api of property
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -153,7 +145,6 @@ exports.update = function(req, res, next) {
 	    where["isActive"] = true;
 	    where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
 	    req.body.updatedAt = now;
-	    //console.log("====>",req.body.updatedAt);
 	    Property.update(where, { $set: req.body }, {upsert: true}, function(err, property) {
 	        if (err) {
 				res.statusCode = 401;
@@ -186,15 +177,10 @@ exports.update = function(req, res, next) {
 					} else if(property == null || property.length == 0) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'property not found', "result": []});
-					} 
-					
+					} 		
 					return res.json({"status": "success", "statusCode": 200, "message": "Property has been updated successfully", "result": property});
 		        });
-
-			}
-	       
-	       
-			
+			} 			
 	    });
     }
 	

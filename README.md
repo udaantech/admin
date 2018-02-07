@@ -2638,19 +2638,12 @@
 
 ```
 
-# **Picture Create**
+# **Picture Create multipart**
 
 #### **POST** {{Base_url}}/picture/create
 
-*Resquest JSON*
-``` JSON
-{
-    "name": "abc.jpg",
-    "mime": "image/jpeg",
-    "size": "2500",
-    "storage": "http://xyz.com/images/abc.jpeg",
-    "createdBy": "5a585ab973b38330416cf38b"
-}
+*Resquest form-data*
+`file` is the name of the <input> field of type `file`
 ```
 *Response*
 ``` JSON
@@ -2666,25 +2659,18 @@
         "size": "2500",
         "storage": "http://xyz.com/images/abc.jpeg",
         "created": "2018-01-19T09:39:53.944Z",
-        "createdBy": "5a585ab973b38330416cf38b",
         "__v": 0
     }
 }
 
 ```
-# **Picture Update**
+# **Picture Update multipart**
 
 #### **PUT** {{Base_url}}/picture/update/:id
 
-*Resquest JSON*
-``` JSON
-{
-    "name": "abcs.jpg",
-    "mime": "image/png",
-    "size": "2500",
-    "storage": "http://xyz.com/images/abc.jpeg",
-    "lastmodifiedby": "5a585ab973b38330416cf38b"
-}
+*Resquest form-data*
+```
+`file` is the name of the <input> field of type `file`
 ```
 *Response*
 ``` JSON
@@ -2694,16 +2680,14 @@
     "message": "Picture has been updated successfully",
     "result": {
         "isActive": true,
-        "_id": "5a61bce90a923c4150635ffe",
-        "name": "abcs.jpg",
+        "_id": "5a66f7b3c907312f940f89d6",
+        "name": "upload_316e3969aa531f5510c052906c6a06ce",
         "mime": "image/png",
-        "size": "2500",
-        "storage": "http://xyz.com/images/abc.jpeg",
-        "created": "2018-01-19T09:39:53.944Z",
-        "createdBy": "5a585ab973b38330416cf38b",
+        "size": "991794",
+        "storage": "local",
+        "created": "2018-01-23T08:52:03.846Z",
         "__v": 0,
-        "lastmodifiedby": "5a585ab973b38330416cf38b",
-        "lastmodified": "2018-01-19T09:40:48.369Z"
+        "lastmodified": "2018-01-23T09:01:10.656Z"
     }
 }
 ```
@@ -2949,8 +2933,1720 @@
     "result": []
 }
 
+
+```
+# **Language Create**
+
+#### **POST** {{Base_url}}/languages/create
+
+*Resquest JSON*
+``` JSON
+{
+    "name": "Hindi",
+    "flag": true,
+    "numberStaffSpeaking": "10",
+    "createdBy": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Language created successfully",
+    "result": {
+        "flag": true,
+        "isActive": true,
+        "_id": "5a657d40dd121a1f65b885dc",
+        "name": "Hindi",
+        "numberStaffSpeaking": "10",
+        "created": "2018-01-22T05:57:20.457Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0
+    }
+}
+
+```
+# **Language Update**
+
+#### **PUT** {{Base_url}}/languages/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "name": "Hindi",
+    "flag": true,
+    "numberStaffSpeaking": "20",
+    "lastmodifiedby": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Language has been updated successfully",
+    "result": {
+        "flag": true,
+        "isActive": true,
+        "_id": "5a657d40dd121a1f65b885dc",
+        "name": "Hindi",
+        "numberStaffSpeaking": "20",
+        "created": "2018-01-22T05:57:20.457Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0,
+        "lastmodified": "2018-01-22T07:18:13.963Z",
+        "lastmodifiedby": "5a585ab973b38330416cf38b"
+    }
+}
+```
+
+# **Language Lists**
+
+#### **GET** {{Base_url}}/languages/
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Language list",
+    "result": [
+        {
+            "flag": true,
+            "isActive": true,
+            "_id": "5a65765bdd121a1f65b885da",
+            "name": "English",
+            "numberStaffSpeaking": "5",
+            "created": "2018-01-22T05:27:55.695Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0
+        },
+        {
+            "flag": true,
+            "isActive": true,
+            "_id": "5a657d40dd121a1f65b885dc",
+            "name": "Hindi",
+            "numberStaffSpeaking": "20",
+            "created": "2018-01-22T05:57:20.457Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0,
+            "lastmodified": "2018-01-22T06:03:25.129Z"
+        }
+    ]
+}
+
+```
+# **Languages View**
+
+#### **GET** {{Base_url}}/languages/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Language fetch",
+    "result": {
+        "flag": true,
+        "isActive": true,
+        "_id": "5a65765bdd121a1f65b885da",
+        "name": "English",
+        "numberStaffSpeaking": "5",
+        "created": "2018-01-22T05:27:55.695Z",
+        "createdBy": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "__v": 0
+    }
+}
+
+```
+# **Languages Delete**
+
+#### **DELETE** {{Base_url}}/languages/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Language has been deleted successfully!",
+    "result": []
+}
+
+```
+
+# **Activity Create**
+
+#### **POST** {{Base_url}}/activities/create
+
+*Resquest JSON*
+``` JSON
+{
+    "name": "Cinema",
+    "description": "Very good",
+    "activityTypeId": "5a61cf582b036e4f4bd39116",
+    "facilityId": "5a606fa5b406dd478715fdc5",
+    "picture": "5a61bce90a923c4150635ffe",
+    "inHouse": "in the hotel",
+    "createdBy": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Activity created successfully",
+    "result": {
+        "isActive": true,
+        "picture": [
+            "5a61bce90a923c4150635ffe"
+        ],
+        "_id": "5a658ff23467592b523badd8",
+        "name": "Cinema",
+        "description": "Very good",
+        "activityTypeId": "5a61cf582b036e4f4bd39116",
+        "facilityId": "5a606fa5b406dd478715fdc5",
+        "inHouse": "in the hotel",
+        "created": "2018-01-22T07:17:06.403Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0
+    }
+}
+
+```
+# **Activity Update**
+
+#### **PUT** {{Base_url}}/activities/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "name": "Gym",
+    "description": "Very good",
+    "activityTypeId": "5a61cf582b036e4f4bd39116",
+    "facilityId": "5a606fa5b406dd478715fdc5",
+    "picture": "5a61bce90a923c4150635ffe",
+    "inHouse": "in the hotel",
+    "lastmodifiedby": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Activity has been updated successfully",
+    "result": {
+        "isActive": true,
+        "picture": [
+            "5a61bce90a923c4150635ffe"
+        ],
+        "_id": "5a658eb93467592b523badd7",
+        "name": "Gym",
+        "description": "Very good",
+        "activityTypeId": "5a61cf582b036e4f4bd39116",
+        "facilityId": "5a606fa5b406dd478715fdc5",
+        "inHouse": "in the hotel",
+        "created": "2018-01-22T07:11:53.483Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0,
+        "lastmodifiedby": "5a585ab973b38330416cf38b",
+        "lastmodified": "2018-01-22T07:26:24.589Z"
+    }
+}
+```
+
+# **Activity Lists**
+
+#### **GET** {{Base_url}}/activities/
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Activity list",
+    "result": [
+        {
+            "isActive": true,
+            "picture": [
+                {
+                    "_id": "5a61bce90a923c4150635ffe",
+                    "name": "abcs.jpg"
+                }
+            ],
+            "_id": "5a658eb93467592b523badd7",
+            "name": "Cinema",
+            "description": "Very good",
+            "activityTypeId": {
+                "_id": "5a61cf582b036e4f4bd39116",
+                "name": "sportssss",
+                "description": "sports descriptionss"
+            },
+            "facilityId": {
+                "_id": "5a606fa5b406dd478715fdc5",
+                "name": "Table tannis pool",
+                "description": "very nice facility"
+            },
+            "inHouse": "in the hotel",
+            "created": "2018-01-22T07:11:53.483Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0
+        },
+        {
+            "isActive": true,
+            "picture": [
+                {
+                    "_id": "5a61bce90a923c4150635ffe",
+                    "name": "abcs.jpg"
+                }
+            ],
+            "_id": "5a658ff23467592b523badd8",
+            "name": "Cinema",
+            "description": "Very good",
+            "activityTypeId": {
+                "_id": "5a61cf582b036e4f4bd39116",
+                "name": "sportssss",
+                "description": "sports descriptionss"
+            },
+            "facilityId": {
+                "_id": "5a606fa5b406dd478715fdc5",
+                "name": "Table tannis pool",
+                "description": "very nice facility"
+            },
+            "inHouse": "in the hotel",
+            "created": "2018-01-22T07:17:06.403Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0
+        }
+    ]
+}
+
+```
+# **Activity View**
+
+#### **GET** {{Base_url}}/activities/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Activity fetch",
+    "result": {
+        "isActive": true,
+        "picture": [
+            {
+                "_id": "5a61bce90a923c4150635ffe",
+                "name": "abcs.jpg"
+            }
+        ],
+        "_id": "5a658eb93467592b523badd7",
+        "name": "Cinema",
+        "description": "Very good",
+        "activityTypeId": {
+            "_id": "5a61cf582b036e4f4bd39116",
+            "name": "sportssss",
+            "description": "sports descriptionss"
+        },
+        "facilityId": {
+            "_id": "5a606fa5b406dd478715fdc5",
+            "name": "Table tannis pool",
+            "description": "very nice facility"
+        },
+        "inHouse": "in the hotel",
+        "created": "2018-01-22T07:11:53.483Z",
+        "createdBy": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "__v": 0
+    }
+}
+
+```
+# **Activity Delete**
+
+#### **DELETE** {{Base_url}}/activities/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Activity has been deleted successfully!",
+    "result": []
+}
+
+
+
 ```
 
 
+# **RoomPolicy Create**
+
+#### **POST** {{Base_url}}/roomPolicies/create
+
+*Resquest JSON*
+``` JSON
+{
+    "propertyId": "5a5ef2898b289d1fb108a04e",
+    "policyId": "5a61a5355aa9a734aca34daa",
+    "createdBy": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "RoomPolicy created successfully",
+    "result": {
+        "isActive": true,
+        "_id": "5a65bc9743f0433a9975b1e6",
+        "propertyId": "5a5ef2898b289d1fb108a04e",
+        "policyId": "5a61a5355aa9a734aca34daa",
+        "created": "2018-01-22T10:27:35.543Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0
+    }
+}
+
+```
+# **RoomPolicy Update**
+
+#### **PUT** {{Base_url}}/roomPolicies/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "propertyId": "5a5ef2898b289d1fb108a04e",
+    "policyId": "5a61a5355aa9a734aca34daa",
+    "lastmodifiedby": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "RoomPolicy has been updated successfully",
+    "result": {
+        "isActive": true,
+        "_id": "5a65bb0e43f0433a9975b1e5",
+        "propertyId": "5a5ef2898b289d1fb108a04e",
+        "policyId": "5a61a5355aa9a734aca34daa",
+        "created": "2018-01-22T10:21:02.638Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0,
+        "lastmodifiedby": "5a585ab973b38330416cf38b",
+        "lastmodified": "2018-01-22T10:36:08.486Z"
+    }
+}
+```
+
+# **RoomPolicy Lists**
+
+#### **GET** {{Base_url}}/roomPolicies/
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "RoomPolicy list",
+    "result": [
+        {
+            "isActive": true,
+            "_id": "5a65bb0e43f0433a9975b1e5",
+            "propertyId": {
+                "_id": "5a5ef2898b289d1fb108a04e",
+                "name": "Hotel Tata",
+                "description": "5 star hotelSector 63 A block noida",
+                "address": "Sector 63 A block noidas"
+            },
+            "policyId": {
+                "_id": "5a61a5355aa9a734aca34daa",
+                "name": "policy 1"
+            },
+            "created": "2018-01-22T10:21:02.638Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0
+        },
+        {
+            "isActive": true,
+            "_id": "5a65b97094d4513a2d3d4d02",
+            "__v": 0,
+            "propertyId": {
+                "_id": "5a5ef2898b289d1fb108a04e",
+                "name": "Hotel Tata",
+                "description": "5 star hotelSector 63 A block noida",
+                "address": "Sector 63 A block noidas"
+            },
+            "policyId": {
+                "_id": "5a61a5355aa9a734aca34daa",
+                "name": "policy 1"
+            },
+            "lastmodifiedby": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "lastmodified": "2018-01-22T10:26:57.827Z"
+        },
+        {
+            "isActive": true,
+            "_id": "5a65bc9743f0433a9975b1e6",
+            "propertyId": {
+                "_id": "5a5ef2898b289d1fb108a04e",
+                "name": "Hotel Tata",
+                "description": "5 star hotelSector 63 A block noida",
+                "address": "Sector 63 A block noidas"
+            },
+            "policyId": {
+                "_id": "5a61a5355aa9a734aca34daa",
+                "name": "policy 1"
+            },
+            "created": "2018-01-22T10:27:35.543Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0
+        }
+    ]
+}
+
+```
+# **RoomPolicy View**
+
+#### **GET** {{Base_url}}/roomPolicies/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "RoomPolicy fetch",
+    "result": {
+        "isActive": true,
+        "_id": "5a65bb0e43f0433a9975b1e5",
+        "propertyId": {
+            "_id": "5a5ef2898b289d1fb108a04e",
+            "name": "Hotel Tata",
+            "description": "5 star hotelSector 63 A block noida",
+            "address": "Sector 63 A block noidas"
+        },
+        "policyId": {
+            "_id": "5a61a5355aa9a734aca34daa",
+            "name": "policy 1"
+        },
+        "created": "2018-01-22T10:21:02.638Z",
+        "createdBy": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "__v": 0
+    }
+}
+```
+# **RoomPolicy Delete**
+
+#### **DELETE** {{Base_url}}/roomPolicies/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "RoomPolicy has been deleted successfully!",
+    "result": []
+}
 
 
+```
+# **PropertySpokenLanguage Create**
+
+#### **POST** {{Base_url}}/propertySpokenLanguages/create
+
+*Resquest JSON*
+``` JSON
+{
+    "propertyId": "5a5ef2898b289d1fb108a04e",
+    "numberStaffSpeaking": "10",
+    "createdBy": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Property Spoken Language created successfully",
+    "result": {
+        "isActive": true,
+        "_id": "5a65cf9b24934f47a1bf90d6",
+        "propertyId": "5a5ef2898b289d1fb108a04e",
+        "numberStaffSpeaking": "10",
+        "created": "2018-01-22T11:48:43.224Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0
+    }
+}
+
+```
+# **PropertySpokenLanguage Update**
+
+#### **PUT** {{Base_url}}/propertySpokenLanguages/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "propertyId": "5a5ef2898b289d1fb108a04e",
+    "numberStaffSpeaking": "15",
+    "lastmodifiedby": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Property Spoken Language has been updated successfully",
+    "result": {
+        "isActive": true,
+        "_id": "5a65cca2e64912458ec3df62",
+        "propertyId": "5a5ef2898b289d1fb108a04e",
+        "numberStaffSpeaking": "15",
+        "created": "2018-01-22T11:36:02.779Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0,
+        "lastmodifiedby": "5a585ab973b38330416cf38b",
+        "lastmodified": "2018-01-22T11:48:20.764Z"
+    }
+}
+```
+
+# **PropertySpokenLanguage Lists**
+
+#### **GET** {{Base_url}}/propertySpokenLanguages/
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Property Spoken Language list",
+    "result": [
+        {
+            "isActive": true,
+            "_id": "5a65cca2e64912458ec3df62",
+            "propertyId": {
+                "_id": "5a5ef2898b289d1fb108a04e",
+                "name": "Hotel Tata",
+                "description": "5 star hotelSector 63 A block noida",
+                "address": "Sector 63 A block noidas"
+            },
+            "numberStaffSpeaking": "15",
+            "created": "2018-01-22T11:36:02.779Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0,
+            "lastmodifiedby": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "lastmodified": "2018-01-22T11:48:20.764Z"
+        },
+        {
+            "isActive": true,
+            "_id": "5a65cf9b24934f47a1bf90d6",
+            "propertyId": {
+                "_id": "5a5ef2898b289d1fb108a04e",
+                "name": "Hotel Tata",
+                "description": "5 star hotelSector 63 A block noida",
+                "address": "Sector 63 A block noidas"
+            },
+            "numberStaffSpeaking": "10",
+            "created": "2018-01-22T11:48:43.224Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0
+        }
+    ]
+}
+
+```
+# **PropertySpokenLanguage View**
+
+#### **GET** {{Base_url}}/propertySpokenLanguages/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Property Spoken Language fetch",
+    "result": {
+        "isActive": true,
+        "_id": "5a65cca2e64912458ec3df62",
+        "propertyId": {
+            "_id": "5a5ef2898b289d1fb108a04e",
+            "name": "Hotel Tata",
+            "description": "5 star hotelSector 63 A block noida",
+            "address": "Sector 63 A block noidas"
+        },
+        "numberStaffSpeaking": "15",
+        "created": "2018-01-22T11:36:02.779Z",
+        "createdBy": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "__v": 0,
+        "lastmodifiedby": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "lastmodified": "2018-01-22T11:48:20.764Z"
+    }
+}
+
+```
+# **PropertySpokenLanguage Delete**
+
+#### **DELETE** {{Base_url}}/propertySpokenLanguages/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Property Spoken Language has been deleted successfully!",
+    "result": []
+}
+
+```
+# **HotelRoomCategory Create**
+
+#### **POST** {{Base_url}}/hotelRoomCategories/create
+
+*Resquest JSON*
+``` JSON
+{
+    "propertyId": "5a5ef2898b289d1fb108a04e",
+    "roomcategoryId": "5a5d8b1be9932624d5dc42ce",
+    "createdBy": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Hotel Room Category created successfully",
+    "result": {
+        "isActive": true,
+        "_id": "5a65d701faf7a84b35d778e2",
+        "propertyId": "5a5ef2898b289d1fb108a04e",
+        "roomcategoryId": "5a5d8b1be9932624d5dc42ce",
+        "created": "2018-01-22T12:20:17.983Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0
+    }
+}
+
+```
+# **HotelRoomCategory Update**
+
+#### **PUT** {{Base_url}}/hotelRoomCategories/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "propertyId": "5a5ef2898b289d1fb108a04e",
+    "roomcategoryId": "5a5d8b46e9932624d5dc42cf",
+    "lastmodifiedby": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Hotel Room Category has been updated successfully",
+    "result": {
+        "isActive": true,
+        "_id": "5a65d701faf7a84b35d778e2",
+        "propertyId": "5a5ef2898b289d1fb108a04e",
+        "roomcategoryId": "5a5d8b46e9932624d5dc42cf",
+        "created": "2018-01-22T12:20:17.983Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0,
+        "lastmodifiedby": "5a585ab973b38330416cf38b",
+        "lastmodified": "2018-01-22T12:30:33.328Z"
+    }
+}
+```
+
+# **HotelRoomCategory Lists**
+
+#### **GET** {{Base_url}}/hotelRoomCategories/
+
+```
+*Response*
+``` JSON
+{ 
+    "status": "success",
+    "statusCode": 200,
+    "message": "Hotel Room Category list",
+    "result": [
+        {
+            "isActive": true,
+            "_id": "5a65d701faf7a84b35d778e2",
+            "propertyId": {
+                "_id": "5a5ef2898b289d1fb108a04e",
+                "name": "Hotel Tata",
+                "description": "5 star hotelSector 63 A block noida",
+                "address": "Sector 63 A block noidas"
+            },
+            "roomcategoryId": {
+                "_id": "5a5d8b1be9932624d5dc42ce",
+                "name": "Double room luxury",
+                "description": "Double room description"
+            },
+            "created": "2018-01-22T12:20:17.983Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0
+        }
+    ]
+}
+
+```
+# **HotelRoomCategory View**
+
+#### **GET** {{Base_url}}/hotelRoomCategories/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Hotel Room Category fetch",
+    "result": {
+        "isActive": true,
+        "_id": "5a65d701faf7a84b35d778e2",
+        "propertyId": {
+            "_id": "5a5ef2898b289d1fb108a04e",
+            "name": "Hotel Tata",
+            "description": "5 star hotelSector 63 A block noida",
+            "address": "Sector 63 A block noidas"
+        },
+        "roomcategoryId": {
+            "_id": "5a5d8b1be9932624d5dc42ce",
+            "name": "Double room luxury",
+            "description": "Double room description"
+        },
+        "created": "2018-01-22T12:20:17.983Z",
+        "createdBy": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "__v": 0
+    }
+}
+
+```
+# **HotelRoomCategory Delete**
+
+#### **DELETE** {{Base_url}}/hotelRoomCategories/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Hotel Room Category has been deleted successfully!",
+    "result": []
+}
+
+```
+# **Entity Create**
+
+#### **POST** {{Base_url}}/entities/create
+
+*Resquest JSON*
+``` JSON
+{
+    "imageId": "5a61bce90a923c4150635ffe",
+    "title": "Image",
+    "description": "image description",
+    "createdBy": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Entity created successfully",
+    "result": {
+        "_id": "5a66d98d123815188cfefe43",
+        "imageId": "5a61bce90a923c4150635ffe",
+        "title": "Image",
+        "description": "image description",
+        "created": "2018-01-23T06:43:25.432Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0
+    }
+}
+```
+
+# **Entity Update**
+
+#### **PUT** {{Base_url}}/entities/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "imageId": "5a61bce90a923c4150635ffe",
+    "tags": ["5a68276af523a21ef4146082"],
+    "title": "Image Title Update",
+    "description": "Image description",
+    "lastmodifiedby": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Entity has been updated successfully",
+    "result": {
+        "tags": [
+            "5a68276af523a21ef4146082"
+        ],
+        "_id": "5a6834675c97c3269837a8a9",
+        "imageId": "5a61bce90a923c4150635ffe",
+        "title": "Image Title Update",
+        "description": "Image description",
+        "created": "2018-01-24T07:23:19.715Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0,
+        "lastmodified": "2018-01-24T09:44:48.166Z",
+        "lastmodifiedby": "5a585ab973b38330416cf38b"
+    }
+}
+```
+
+# **Entity Lists**
+
+#### **GET** {{Base_url}}/entities/
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Entity list",
+    "result": [
+        {
+            "tags": [
+                {
+                    "_id": "5a68276af523a21ef4146082",
+                    "label": "Tag update 1"
+                }
+            ],
+            "_id": "5a6834675c97c3269837a8a9",
+            "imageId": {
+                "_id": "5a61bce90a923c4150635ffe",
+                "name": "abcs.jpg"
+            },
+            "title": "Image Title Update",
+            "description": "Image description",
+            "created": "2018-01-24T07:23:19.715Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0,
+            "lastmodified": "2018-01-24T09:44:48.166Z",
+            "lastmodifiedby": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            }
+        }
+    ]
+}
+
+```
+# **Entity View**
+
+#### **GET** {{Base_url}}/entities/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Entity fetch",
+    "result": {
+        "tags": [
+            {
+                "_id": "5a68276af523a21ef4146082",
+                "label": "Tag update 1"
+            }
+        ],
+        "_id": "5a6834675c97c3269837a8a9",
+        "imageId": {
+            "_id": "5a61bce90a923c4150635ffe",
+            "name": "abcs.jpg"
+        },
+        "title": "Image Title Update",
+        "description": "Image description",
+        "created": "2018-01-24T07:23:19.715Z",
+        "createdBy": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "__v": 0,
+        "lastmodified": "2018-01-24T09:44:48.166Z",
+        "lastmodifiedby": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        }
+    }
+}
+
+```
+# **Entity Delete**
+
+#### **DELETE** {{Base_url}}/entities/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Entity has been deleted successfully!",
+    "result": []
+}
+```
+
+# **Tag Create**
+
+#### **POST** {{Base_url}}/tags/create
+
+*Resquest JSON*
+``` JSON
+{
+    "label": "tag 1",
+    "category": "image",
+    "createdBy": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Tag list",
+    "result": {
+        "_id": "5a66f3de5e2e9225a33d19eb",
+        "label": "tag 1",
+        "category": "image",
+        "created": "2018-01-23T08:35:42.275Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0
+    }
+}
+
+```
+# **Tag Update**
+
+#### **PUT** {{Base_url}}/tags/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "label": "Tag update 2",
+    "category": "Image Update 2",
+    "lastmodifiedby": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Tag has been updated successfully",
+    "result": {
+        "_id": "5a66f3de5e2e9225a33d19eb",
+        "__v": 0,
+        "label": "Tag update 2",
+        "category": "Image Update 2",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "lastmodifiedby": "5a585ab973b38330416cf38b",
+        "lastmodified": "2018-01-24T09:57:11.285Z"
+    }
+}
+```
+
+# **Tag Lists**
+
+#### **GET** {{Base_url}}/tags/
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Tag list",
+    "result": [
+        {
+            "_id": "5a68276af523a21ef4146082",
+            "label": "Tag update 1",
+            "category": "Image Update 1",
+            "created": "2018-01-24T06:27:54.340Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0
+        },
+        {
+            "_id": "5a66f3de5e2e9225a33d19eb",
+            "__v": 0,
+            "label": "Tag update 2",
+            "category": "Image Update 2",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "lastmodifiedby": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "lastmodified": "2018-01-24T09:45:24.380Z"
+        }
+    ]
+}
+
+```
+# **Tag View**
+
+#### **GET** {{Base_url}}/tag/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Tag fetch",
+    "result": {
+        "_id": "5a66f3de5e2e9225a33d19eb",
+        "__v": 0,
+        "label": "Tag update 2",
+        "category": "Image Update 2",
+        "createdBy": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "lastmodifiedby": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "lastmodified": "2018-01-24T09:57:11.285Z"
+    }
+}
+
+```
+# **Tag Delete**
+
+#### **DELETE** {{Base_url}}/tags/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Tag has been deleted successfully!",
+    "result": []
+}
+```
+
+# **Category Create**
+
+#### **POST** {{Base_url}}/categories/create
+
+*Resquest JSON*
+``` JSON
+{
+    "label": "Category label 1",
+    "description": "Category description",
+    "createdBy": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Category created successfully",
+    "result": {
+        "_id": "5a68614883cef03fb23a5a41",
+        "label": "Category label 1",
+        "description": "Category description",
+        "created": "2018-01-24T10:34:48.088Z",
+        "createdBy": "5a585ab973b38330416cf38b",
+        "__v": 0
+    }
+}
+
+```
+# **Category Update**
+
+#### **PUT** {{Base_url}}/categories/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "label": "Category label 1 update",
+    "description": "Category description",
+    "lastmodifiedby": "5a585ab973b38330416cf38b"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Category has been updated successfully!",
+    "result": {
+        "_id": "5a685f9f647b193e9a8ef816",
+        "__v": 0,
+        "label": "Category label 1 update",
+        "description": "Category description",
+        "lastmodifiedby": "5a585ab973b38330416cf38b"
+    }
+}
+```
+
+# **Category Lists**
+
+#### **GET** {{Base_url}}/categories/
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Category list",
+    "result": [
+        {
+            "_id": "5a68614883cef03fb23a5a41",
+            "label": "Category label 1",
+            "description": "Category description",
+            "created": "2018-01-24T10:34:48.088Z",
+            "createdBy": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            },
+            "__v": 0
+        },
+        {
+            "_id": "5a685f9f647b193e9a8ef816",
+            "__v": 0,
+            "label": "Category label 1 update",
+            "description": "Category description",
+            "lastmodifiedby": {
+                "_id": "5a585ab973b38330416cf38b",
+                "firstname": "raj",
+                "lastname": "sharma",
+                "email": "mohit.verma@udaantechnologies.com"
+            }
+        }
+    ]
+}
+
+```
+# **Category View**
+
+#### **GET** {{Base_url}}/categories/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Category fetch",
+    "result": {
+        "_id": "5a68614883cef03fb23a5a41",
+        "label": "Category label 1",
+        "description": "Category description",
+        "created": "2018-01-24T10:34:48.088Z",
+        "createdBy": {
+            "_id": "5a585ab973b38330416cf38b",
+            "firstname": "raj",
+            "lastname": "sharma",
+            "email": "mohit.verma@udaantechnologies.com"
+        },
+        "__v": 0
+    }
+}
+
+```
+# **Category Delete**
+
+#### **DELETE** {{Base_url}}/categories/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Category has been deleted successfully!",
+    "result": []
+}
+```
+# **Guest Create**
+
+#### **POST** {{Base_url}}/guest/create
+
+*Resquest JSON*
+``` JSON
+{
+    "contactId": "5a5882d8a894ba4ae816ccab",
+    "groupId": "5a5881c484520e49d66b615a",
+    "roomNumber": "A-301",
+    "nationality": "UAE",
+    "languages": "5a6971f4b4e0cc2e419dc018",
+    "status": 1,
+    "checkInDate": "2017-01-25",
+    "checkOutDate": "2017-01-27"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest created successfully",
+    "result": {
+        "isActive": true,
+        "_id": "5a69741ca776022ecb16b4cc",
+        "contactId": "5a5882d8a894ba4ae816ccab",
+        "groupId": "5a5881c484520e49d66b615a",
+        "roomNumber": "A-301",
+        "nationality": "UAE",
+        "languages": "5a6971f4b4e0cc2e419dc018",
+        "status": true,
+        "checkInDate": "2017-01-25T00:00:00.000Z",
+        "checkOutDate": "2017-01-27T00:00:00.000Z",
+        "createdAt": "2018-01-25T06:07:24.238Z",
+        "__v": 0
+    }
+}
+
+```
+# **Guest Update**
+
+#### **PUT** {{Base_url}}/guest/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "contactId": "5a5882d8a894ba4ae816ccab",
+    "groupId": "5a5881c484520e49d66b615b",
+    "roomNumber": "A-303",
+    "nationality": "India",
+    "languages": "5a6971f4b4e0cc2e419dc018",
+    "status": 1,
+    "checkInDate": "2017-01-25",
+    "checkOutDate": "2017-01-27"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest has been updated successfully",
+    "result": {
+        "isActive": true,
+        "_id": "5a6971a0e8b0fc2e15326d18",
+        "contactId": "5a5882d8a894ba4ae816ccab",
+        "groupId": "5a5881c484520e49d66b615b",
+        "roomNumber": "A-303",
+        "nationality": "India",
+        "languages": "5a6971f4b4e0cc2e419dc018",
+        "status": true,
+        "checkInDate": "2017-01-25T00:00:00.000Z",
+        "checkOutDate": "2017-01-27T00:00:00.000Z",
+        "createdAt": "2018-01-25T05:56:48.948Z",
+        "__v": 0,
+        "updatedAt": "2018-01-25T06:10:04.243Z"
+    }
+}
+```
+
+# **Guest Lists**
+
+#### **GET** {{Base_url}}/guest/
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest list",
+    "result": [
+        {
+            "isActive": true,
+            "_id": "5a6971a0e8b0fc2e15326d18",
+            "contactId": {
+                "isActive": true,
+                "_id": "5a5881c484520e49d66b615a",
+                "contact_type": "5a586705a38a177f8126611a",
+                "first_name": "amit",
+                "last_name": "pandey",
+                "title": "pandey g",
+                "email": "amit.pandey@gmail.com",
+                "phone": "9599322537",
+                "mobile": "9599322537",
+                "messengerwhatsApp": "amitp_ud",
+                "messengerFB": "amitp_ud",
+                "messengerLine": "amitp_ud",
+                "__v": 0
+            },
+            "groupId": "5a5881c484520e49d66b615a",
+            "roomNumber": "A-301",
+            "nationality": "UAE",
+            "languages": {
+                "_id": "5a6970986a68602db0592c1c",
+                "name": "English"
+            },
+            "status": true,
+            "checkInDate": "2017-01-25T00:00:00.000Z",
+            "checkOutDate": "2017-01-27T00:00:00.000Z",
+            "createdAt": "2018-01-25T05:56:48.948Z",
+            "__v": 0
+        },
+        {
+            "isActive": true,
+            "_id": "5a69741ca776022ecb16b4cc",
+            "contactId": {
+                "isActive": true,
+                "_id": "5a5882d8a894ba4ae816ccab",
+                "contact_type": "5a586705a38a177f8126611a",
+                "first_name": "pradeep",
+                "last_name": "singhs",
+                "title": "yo yo",
+                "email": "ms.mohit1986@gmail.com",
+                "phone": "9599322537",
+                "mobile": "9599322537",
+                "messengerwhatsApp": "mohitv_ud",
+                "messengerFB": "mohitv_ud",
+                "messengerLine": "mohitv_ud",
+                "__v": 0
+            },
+            "groupId": "5a5881c484520e49d66b615a",
+            "roomNumber": "A-301",
+            "nationality": "UAE",
+            "languages": {
+                "_id": "5a6971f4b4e0cc2e419dc018",
+                "name": "hindi"
+            },
+            "status": true,
+            "checkInDate": "2017-01-25T00:00:00.000Z",
+            "checkOutDate": "2017-01-27T00:00:00.000Z",
+            "createdAt": "2018-01-25T06:07:24.238Z",
+            "__v": 0
+        }
+    ]
+}
+
+```
+# **Guest View**
+
+#### **GET** {{Base_url}}/guest/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest fetch",
+    "result": {
+        "isActive": true,
+        "_id": "5a6971a0e8b0fc2e15326d18",
+        "contactId": {
+            "isActive": true,
+            "_id": "5a5881c484520e49d66b615a",
+            "contact_type": "5a586705a38a177f8126611a",
+            "first_name": "amit",
+            "last_name": "pandey",
+            "title": "pandey g",
+            "email": "amit.pandey@gmail.com",
+            "phone": "9599322537",
+            "mobile": "9599322537",
+            "messengerwhatsApp": "amitp_ud",
+            "messengerFB": "amitp_ud",
+            "messengerLine": "amitp_ud",
+            "__v": 0
+        },
+        "groupId": "5a5881c484520e49d66b615a",
+        "roomNumber": "A-301",
+        "nationality": "UAE",
+        "languages": {
+            "_id": "5a6970986a68602db0592c1c",
+            "name": "English"
+        },
+        "status": true,
+        "checkInDate": "2017-01-25T00:00:00.000Z",
+        "checkOutDate": "2017-01-27T00:00:00.000Z",
+        "createdAt": "2018-01-25T05:56:48.948Z",
+        "__v": 0
+    }
+}
+
+```
+# **Guest Delete**
+
+#### **DELETE** {{Base_url}}/guest/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest has been deleted successfully!",
+    "result": []
+}
+
+```
+
+# **Guest Group Create**
+
+#### **POST** {{Base_url}}/guestGroup/create
+
+*Resquest JSON*
+``` JSON
+{
+    "name": "Guest group",
+    "description": "group description"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest Group has been created successfully!",
+    "result": {
+        "isActive": true,
+        "_id": "5a69b0f633824847dde642aa",
+        "name": "Guest group",
+        "description": "group description",
+        "createdAt": "2018-01-25T10:27:02.894Z",
+        "__v": 0
+    }
+}
+
+```
+# **Guest Group Update**
+
+#### **PUT** {{Base_url}}/guestGroup/update/:id
+
+*Resquest JSON*
+``` JSON
+{
+    "name": "Guest group update",
+    "description": "description update"
+}
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest Group has been updated successfully!",
+    "result": {
+        "isActive": true,
+        "_id": "5a69b0f633824847dde642aa",
+        "name": "Guest group update",
+        "description": "description update",
+        "createdAt": "2018-01-25T10:27:02.894Z",
+        "__v": 0,
+        "updatedAt": "2018-01-25T10:36:05.259Z"
+    }
+}
+```
+
+# **Guest Group Lists**
+
+#### **GET** {{Base_url}}/guestGroup/
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest Group list",
+    "result": [
+        {
+            "isActive": true,
+            "_id": "5a69b0f633824847dde642aa",
+            "name": "Guest group update",
+            "description": "description update",
+            "createdAt": "2018-01-25T10:27:02.894Z",
+            "__v": 0,
+            "updatedAt": "2018-01-25T10:36:05.259Z"
+        }
+    ]
+}
+
+```
+# **Guest Group View**
+
+#### **GET** {{Base_url}}/guestGroup/view/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest Group fetch",
+    "result": {
+        "isActive": true,
+        "_id": "5a69b0f633824847dde642aa",
+        "name": "Guest group update",
+        "description": "description update",
+        "createdAt": "2018-01-25T10:27:02.894Z",
+        "__v": 0,
+        "updatedAt": "2018-01-25T10:36:05.259Z"
+    }
+}
+
+```
+# **GuestGroup Delete**
+
+#### **DELETE** {{Base_url}}/guestGroup/delete/:id
+
+```
+*Response*
+``` JSON
+{
+    "status": "success",
+    "statusCode": 200,
+    "message": "Guest Group has been deleted successfully!",
+    "result": []
+}
+
+```

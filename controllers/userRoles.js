@@ -2,11 +2,9 @@ var UserRole = require('../models/userRole');
 
 //create api of userRole
 exports.create = function(req, res, next) {
-	//console.log("=======>","hello");
 	var response = {}; 
     req.checkBody("userId", "User id is a required field").notEmpty();
     req.checkBody("roleId", "Role id is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -30,7 +28,6 @@ exports.create = function(req, res, next) {
 				userRoleCreate.save(function(err,role){
 					if (err) {
 					res.statusCode = 401;
-					//console.log(err.message,'=======>');
 					return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 					}  else {
 					res.statusCode = 200;
@@ -58,7 +55,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Entries has been deleted successfully!", "result": []});
 	});
@@ -66,11 +62,9 @@ exports.delete = function(req, res, next) {
 
 //update api of userRrole
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("userId", "User id is a required field").notEmpty();
     req.checkBody("roleId", "Role id is a required field").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -121,8 +115,7 @@ exports.index = function(req, res, next) {
 			} else if(role == null || role.length == 0) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'User Role not found', "result": []});
-			} 
-			
+			} 	
 			return res.json({"status": "success", "statusCode": 200, "message": "User Role list", "result": role});
         });
 

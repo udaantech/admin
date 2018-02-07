@@ -2,10 +2,8 @@ var RoomCategory = require('../models/roomCategory');
 
 //create api of roomCategory
 exports.create = function(req, res, next) {
-	
 	var response = {};
     req.checkBody("name", "Name is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -29,7 +27,6 @@ exports.create = function(req, res, next) {
 		roomcategorycreate.save(function(err,roomcategory){
 			if (err) {
 				res.statusCode = 401;
-				//console.log(err.message,'=======>');
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
@@ -78,7 +75,6 @@ exports.view = function(req, res, next) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": 'room category not found', "result": []});
 			} 
-			
 			return res.json({"status": "success", "statusCode": 200, "message": "Room Category fetch", "result": roomCategory});
         });
 }
@@ -92,7 +88,6 @@ exports.delete = function(req, res, next) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
-
 	res.statusCode = 200;
 	return res.json({"status": "success", "statusCode": 200, "message": "Room Category has been deleted successfully!", "result": []});
 	});
@@ -100,10 +95,8 @@ exports.delete = function(req, res, next) {
 
 //update api of RoomCategory
 exports.update = function(req, res, next) {
-
 	var response = {}; 
     req.checkBody("name", "Name is a required field.").notEmpty();
-
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -127,7 +120,6 @@ exports.update = function(req, res, next) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": 'Room Category not found', "result": []});
 					} 
-
 			        res.statusCode = 200;
 					return res.json({"status": "success", "statusCode": 200, "message": "Room Category has been updated successfully", "result": roomcategory});
 			    });

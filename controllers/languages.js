@@ -1,9 +1,10 @@
-var Account = require('../models/account');
+var Language = require('../models/language');
 
-//create api of property
+//create api of Language
 exports.create = function(req, res, next) {
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
+    req.checkBody("numberStaffSpeaking", "Number Staff Speaking is a required field").notEmpty();
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
@@ -11,112 +12,116 @@ exports.create = function(req, res, next) {
         return res.json(response); 
     } else {
     	var now = new Date();
-		var accountcreate = new Account({
+		var languageCreate = new Language({
 			name: req.body.name,
-			description: req.body.description,
-			planid: req.body.planid,
-			salesperson: req.body.salesperson,
-			billingaddress: req.body.billingaddress,
-			isActive: 1,
-			createdAt: now
+			flag: req.body.flag,
+			numberStaffSpeaking: req.body.numberStaffSpeaking,
+			created: now,
+			createdBy: req.body.createdBy
 		});
 
-		accountcreate.save(function(err,account){
+		languageCreate.save(function(err,languageCreate){
 			if (err) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			}  else {
 				res.statusCode = 200;
-				return res.json({"status": "success", "statusCode": 200, "message": "Account created successfully", "result": account});
+				return res.json({"status": "success", "statusCode": 200, "message": "Language created successfully", "result": languageCreate});
 			}
+
 		});
     }
 
 }
 
-//list Api of all account
+//list Api of all Language
 exports.index = function(req, res, next) {
 	var where = {};
     where["isActive"] = true;
 
-	 Account.find(where)
-     	.populate("salesperson","_id email firstname lastname")
-        .exec(function(err, account) {
+	 Language.find(where)
+        .populate("createdBy","_id email firstname lastname")
+        .populate("lastmodifiedby","_id email firstname lastname")
+        .exec(function(err, language) {
             if (err) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
-			} else if(account == null || account.length == 0) {
+			} else if(language == null || language.length == 0) {
 				res.statusCode = 401;
-				return res.json({"status": "failure", "statusCode": 401, "message": 'account not found', "result": []});
-			} 
-			return res.json({"status": "success", "statusCode": 200, "message": "Account list", "result": account});
+				return res.json({"status": "failure", "statusCode": 401, "message": 'Language not found', "result": []});
+			} 		
+			return res.json({"status": "success", "statusCode": 200, "message": "Language list", "result": language});
         });
 
 }
 
-//view Api of single account
+//view Api of single language
 exports.view = function(req, res, next) {
     var where = {};
     where["isActive"] = true;
     where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
  
-    Account.findOne(where)
-        .populate("salesperson","_id email firstname lastname")
-        .exec(function(err, account) {
+    Language.findOne(where)
+        .populate("createdBy","_id email firstname lastname")
+        .populate("lastmodifiedby","_id email firstname lastname")
+        .exec(function(err, language) {
             if (err) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
-			} else if(account == null || account.length == 0) {
+			} else if(language == null || language.length == 0) {
 				res.statusCode = 401;
-				return res.json({"status": "failure", "statusCode": 401, "message": 'account not found', "result": []});
+				return res.json({"status": "failure", "statusCode": 401, "message": 'Language not found', "result": []});
 			} 
-			return res.json({"status": "success", "statusCode": 200, "message": "Account fetch", "result": account});
+			return res.json({"status": "success", "statusCode": 200, "message": "Language fetch", "result": language});
         });
 }
 
-//delete api of property
+//delete api of language
 exports.delete = function(req, res, next) {
     var where = {};
     where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
-	Account.remove(where, function(err, account) {
+	Language.remove(where, function(err, language) {
     if (err) {
 		res.statusCode = 401;
 		return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 	}
 	res.statusCode = 200;
-	return res.json({"status": "success", "statusCode": 200, "message": "Account has been deleted successfully!", "result": []});
+	return res.json({"status": "success", "statusCode": 200, "message": "Language has been deleted successfully!", "result": []});
 	});
 }
 
-//update api of property
+//update api of language
 exports.update = function(req, res, next) {
 	var response = {}; 
     req.checkBody("name", "Name is a required field").notEmpty();
+    req.checkBody("numberStaffSpeaking", "Number Staff Speaking is a required field").notEmpty();
     var errors = req.validationErrors();
     if(errors){
     	res.statusCode = 401;
     	response = { "error" : "failure", "message" : errors[0].msg };
         return res.json(response); 
     } else {
+	    var now = new Date();
 	    var where = {};
 	    where["isActive"] = true;
 	    where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
+	    req.body.lastmodified = now;
 
-	    Account.update(where, { $set: req.body }, {upsert: true}, function(err, account) {
+	    Language.update(where, { $set: req.body }, {upsert: true}, function(err, language) {
 	        if (err) {
 				res.statusCode = 401;
 				return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 			} else {
-				  Account.findById(req.params.id, function(err, account) {
+				  Language.findById(req.params.id, function(err, language) {
 			        if (err) {
 						res.statusCode = 401;
 						return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
-					} else if(account == null || account.length == 0) {
+					} else if(language == null || language.length == 0) {
 						res.statusCode = 401;
-						return res.json({"status": "failure", "statusCode": 401, "message": 'account not found', "result": []});
+						return res.json({"status": "failure", "statusCode": 401, "message": 'Language not found', "result": []});
 					} 
 			        res.statusCode = 200;
-					return res.json({"status": "success", "statusCode": 200, "message": "Account has been updated successfully", "result": account});
+					return res.json({"status": "success", "statusCode": 200, "message": "Language has been updated successfully", "result": language});
 			    });
 			}
 	    });
