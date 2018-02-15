@@ -5,16 +5,17 @@ var tagSchema = new Schema({
 	label: {
 		type: String
 	},
-	category: {
-		type: String
+	categoryId: {
+		type: Schema.Types.ObjectId,
+		ref: 'Category'
 	},
-	created: Date,
-	lastmodified: Date,
+	createdAt: Date,
+	updatedAt: Date,
 	createdBy: {
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	},
-	lastmodifiedby: {
+	lastmodifiedBy: {
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	}

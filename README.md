@@ -3850,7 +3850,11 @@
 *Resquest JSON*
 ``` JSON
 {
+    "name": "xyz",
+    "status": "public",
+    "expiryDate": "2018-02-20",
     "imageId": "5a61bce90a923c4150635ffe",
+    "tags": ["5a66f3de5e2e9225a33d19eb"],
     "title": "Image",
     "description": "image description",
     "createdBy": "5a585ab973b38330416cf38b"
@@ -3863,11 +3867,17 @@
     "statusCode": 200,
     "message": "Entity created successfully",
     "result": {
-        "_id": "5a66d98d123815188cfefe43",
+        "tags": [
+            "5a66f3de5e2e9225a33d19eb"
+        ],
+        "_id": "5a6ffa1de3667d197560c905",
+        "name": "xyz",
+        "status": "public",
+        "expiryDate": "2018-02-20T00:00:00.000Z",
         "imageId": "5a61bce90a923c4150635ffe",
         "title": "Image",
         "description": "image description",
-        "created": "2018-01-23T06:43:25.432Z",
+        "created": "2018-01-30T04:52:45.192Z",
         "createdBy": "5a585ab973b38330416cf38b",
         "__v": 0
     }
@@ -3881,6 +3891,9 @@
 *Resquest JSON*
 ``` JSON
 {
+    "name": "abc",
+    "status": "private",
+    "expiryDate": "2018-02-21",
     "imageId": "5a61bce90a923c4150635ffe",
     "tags": ["5a68276af523a21ef4146082"],
     "title": "Image Title Update",
@@ -3898,15 +3911,18 @@
         "tags": [
             "5a68276af523a21ef4146082"
         ],
-        "_id": "5a6834675c97c3269837a8a9",
+        "_id": "5a6ffa1de3667d197560c905",
+        "name": "abc",
+        "status": "private",
+        "expiryDate": "2018-02-21T00:00:00.000Z",
         "imageId": "5a61bce90a923c4150635ffe",
         "title": "Image Title Update",
         "description": "Image description",
-        "created": "2018-01-24T07:23:19.715Z",
+        "created": "2018-01-30T04:52:45.192Z",
         "createdBy": "5a585ab973b38330416cf38b",
         "__v": 0,
-        "lastmodified": "2018-01-24T09:44:48.166Z",
-        "lastmodifiedby": "5a585ab973b38330416cf38b"
+        "lastmodifiedby": "5a585ab973b38330416cf38b",
+        "lastmodified": "2018-01-30T04:54:23.020Z"
     }
 }
 ```

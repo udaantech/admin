@@ -2,6 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var entitySchema = new Schema({
+
+	name: {
+		type: String
+	},
 	imageId: {
 		type: Schema.Types.ObjectId,
 		ref: 'Picture',
@@ -16,6 +20,12 @@ var entitySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Tag'
     }],
+    expiryDate: {
+		type: Date
+	},
+	status: {
+		type: String
+	},
 	created: Date,
 	lastmodified: Date,
 	createdBy: {

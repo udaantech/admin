@@ -1,10 +1,11 @@
 var Tag = require('../models/tag');
+var Category = require('../models/category');
 
 //create tag api
 exports.create = function(req, res, next) {
 	var response = {};
 	req.checkBody("label", "Label is a required field").notEmpty();
-	req.checkBody("category", "Category is a required field").notEmpty();
+	req.checkBody("categoryId", "Category is a required field").notEmpty();
 	var errors = req.validationErrors();
 		if(errors) {
 			res.statusCode = 401;
@@ -14,8 +15,8 @@ exports.create = function(req, res, next) {
 			var now = new Date();
 			var tagCreate = new Tag({
 				label: req.body.label,
-				category: req.body.category,
-				created: now,
+				categoryId: req.body.categoryId,
+				createdAt: now,
 				createdBy: req.body.createdBy
 			});
 
@@ -24,8 +25,26 @@ exports.create = function(req, res, next) {
 					res.statusCode = 401;
 					return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
 				} else {
-					res.statusCode = 200;
-					return res.json({"status" : "success", "statusCode": 200, "message": "Tag created successfully", "result": tag});
+
+					var now = new Date();
+					var where = {};
+					where["_id"] = require("mongoose").Types.ObjectId(req.body.categoryId);
+					var body_obj = {};
+					body_obj["tags"] = require("mongoose").Types.ObjectId(tag._id);
+					//body_obj["updatedAt"] = now;
+
+					Category.update(where, {$push: body_obj}, {upsert: true}, function(err, category) { 
+						if(err) {
+							res.statusCode = 401;
+							return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});
+						} else {
+							res.statusCode = 200;
+							return res.json({"status" : "success", "statusCode": 200, "message": "Tag created successfully", "result": tag});
+
+						}
+
+					});
+					
 				}
 			});
 		}
@@ -35,7 +54,7 @@ exports.create = function(req, res, next) {
 exports.index = function(req, res, next) {
 	Tag.find()
 		.populate("createdBy","_id email firstname lastname")
-        .populate("lastmodifiedby","_id email firstname lastname")
+        .populate("lastmodifiedBy","_id email firstname lastname")
 		.exec(function(err, tag){
 			if(err) {
 				res.statusCode = 401;
@@ -54,7 +73,7 @@ exports.view = function(req, res, next) {
 	where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
 	Tag.findOne(where)
 		.populate("createdBy","_id email firstname lastname")
-        .populate("lastmodifiedby","_id email firstname lastname")
+        .populate("lastmodifiedBy","_id email firstname lastname")
 		.exec(function(err, tag) {
 			if(err) {
 				res.statusCode = 401;
@@ -86,7 +105,7 @@ exports.delete = function(req, res, next) {
 exports.update = function(req, res, next) {
 	var response = {};
 	req.checkBody("label", "Label is a required field").notEmpty();
-	req.checkBody("category", "Category is a required field").notEmpty();
+	req.checkBody("categoryId", "Category is a required field").notEmpty();
 	var errors = req.validationErrors();
 	if(errors) {
 		res.statusCode = 401;
@@ -96,7 +115,7 @@ exports.update = function(req, res, next) {
 		var now = new Date();
 		var where = {};
 		where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
-		req.body.lastmodified = now;
+		req.body.updatedAt = now;
 
 		Tag.update(where, {$set: req.body}, {upsert: true}, function(err, tag) {
 			if(err) {

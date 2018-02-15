@@ -1,10 +1,10 @@
 var Category = require('../models/category');
+var Tag = require('../models/tag');
 
 //create api of Category
 exports.create = function(req, res, next) {
 	var response = {};
 	req.checkBody("label", "Label is a required field").notEmpty();
-	req.checkBody("description", "Description is a required field").notEmpty();
 	var errors = req.validationErrors();
 	if(errors) {
 		res.statusCode = 401;
@@ -14,8 +14,7 @@ exports.create = function(req, res, next) {
 		var now = new Date();
 		var categoryCreate = new Category({
 			label: req.body.label,
-			description: req.body.description,
-			created: now,
+			createdAt: now,
 			createdBy: req.body.createdBy
 		});
 
@@ -34,8 +33,9 @@ exports.create = function(req, res, next) {
 //list api of Category
 exports.index = function(req, res, next) {
 	Category.find()
+		.populate("tags")
 		.populate("createdBy","_id email firstname lastname")
-        .populate("lastmodifiedby","_id email firstname lastname")
+        .populate("lastmodifiedBy","_id email firstname lastname")
         .exec(function(err, category) {
         	if(err) {
         		res.statusCode = 401;
@@ -53,8 +53,9 @@ exports.view = function(req, res, next) {
 	var where = {};
 	where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
 	Category.findOne(where)
+		.populate("tags")
 		.populate("createdBy", "_id email firstname lastname")
-		.populate("lastmodifiedby", "_id email firstname lastname")
+		.populate("lastmodifiedBy", "_id email firstname lastname")
 		.exec(function(err, category) {
 			if(err) {
 				res.statusCode = 401;
@@ -86,15 +87,17 @@ exports.delete = function(req, res, next) {
 exports.update = function(req, res, next) {
 	var response = {};
 	req.checkBody("label", "Label is a required field").notEmpty();
-	req.checkBody("description", "Description is a required field").notEmpty();
 	var errors = req.validationErrors();
 	if(errors) {
 		res.statusCode = 401;
 		response = {"error": "failure", "message": errors[0].msg};
 		return res.json(response);
 	} else {
+		var now = new Date();
 		var where = {};
 		where["_id"] = require("mongoose").Types.ObjectId(req.params.id);
+		req.body.updatedAt = now;
+
 		Category.update(where, {$set: req.body}, {upsert: true}, function(err, category) {
 			if(err) {
 				res.statusCode = 401;
@@ -114,3 +117,4 @@ exports.update = function(req, res, next) {
 		});
 	}
 }
+

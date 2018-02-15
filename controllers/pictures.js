@@ -7,7 +7,7 @@ path = require('path');
 exports.create = function(req, res, next) {
 
     	var form = new formidable.IncomingForm();
-    	//console.log("====>",form);
+    	console.log("====>",form);
 		form.parse(req, function(err, fields, files) {
 	        // `file` is the name of the <input> field of type `file`
 	        var old_path = files.file.path,
@@ -217,13 +217,17 @@ exports.update = function(req, res, next) {
 						    var data = {"name": full_file_name, "mime": mime, "size": file_size, "storage": "local", "lastmodified": now};
 
 						    //req.body.lastmodified = now;
-
+							Picture.findOne(where, function(err, picture) {
+						    	if(picture) {
+						    		fs.unlink(path.join(process.env.PWD, '/public/images/uploads/', picture.name));
+						    	}
+						    });
 						     Picture.update(where, { $set: data }, {upsert: true}, function(err, picture) {
 						        if (err) {
 									res.statusCode = 401;
 									return res.json({"status": "failure", "statusCode": 401, "message": 'error', "result": []});
 								} else {
-									  Picture.findById(req.params.id, function(err, picture) {
+									  	Picture.findById(req.params.id, function(err, picture) {
 								        if (err) {
 											res.statusCode = 401;
 											return res.json({"status": "failure", "statusCode": 401, "message": err.message, "result": []});

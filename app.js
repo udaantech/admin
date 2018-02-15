@@ -89,6 +89,9 @@ var CryptoJS = require("crypto-js");
 var app = express();
 app.use(validator());
 
+var cors=require('cors');
+app.use(cors({origin:true,credentials: true}));
+
 //app.use(bodyParser.json({limit: "50mb"}));
 //app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 var jsonParser       = bodyParser.json({limit:1024*1024*20, type:'application/json'});
@@ -131,16 +134,16 @@ app.use('/facility',apiRoutes, facility);
 app.use('/facilityTypes',apiRoutes, facilityTypes);
 app.use('/openingHours',apiRoutes, openingHours);
 app.use('/policy',apiRoutes, policy);
-app.use('/pictures',apiRoutes, pictures);
+app.use('/pictures', apiRoutes, pictures);
 app.use('/activityTypes',apiRoutes, activityTypes);
 app.use('/languages',apiRoutes, languages);
 app.use('/activities', apiRoutes, activities);
 app.use('/roomPolicies', apiRoutes, roomPolicies);
 app.use('/propertySpokenLanguages', apiRoutes, propertySpokenLanguages);
 app.use('/hotelRoomCategories', apiRoutes, hotelRoomCategories);
-app.use('/entities', apiRoutes, entities);
+app.use('/entities', entities); 
 app.use('/tags', apiRoutes, tags);
-app.use('/categories', apiRoutes, categories);
+app.use('/categories',apiRoutes, categories);
 app.use('/guest', apiRoutes, guest);
 app.use('/guestGroup', apiRoutes, guestGroup);
 
